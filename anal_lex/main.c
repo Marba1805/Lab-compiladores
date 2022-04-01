@@ -108,6 +108,7 @@ TInfoAtomo obter_atomo();
 TAtomo reconhece_comentario();
 void reconhece_id(TInfoAtomo *infoAtomo);
 void reconhece_num(TInfoAtomo *infoAtomo);
+void reconhece_char(TInfoAtomo *infoAtomo);
 
 int main(void){
 	TInfoAtomo InfoAtomo;
@@ -237,6 +238,9 @@ int main(void){
 		else if(InfoAtomo.atomo == END){
 			printf("linha\t%d:end\n", linha);
 		}
+		else if(InfoAtomo.atomo == CARACTERE){
+			printf("linha\t%d:caractere - atributo %s\n", linha, InfoAtomo.atributo_ID);
+		}
 		else if(*palavra == '\0')
 		{
 			printf("fim da analize lexica\n");
@@ -319,7 +323,7 @@ TInfoAtomo obter_atomo(){
 /*
 *	Reconhecimento de operadores relacionais
 */
-	else if((*palavra) == '<' && (*palavra+1) == '='){
+	else if((*palavra) == '<' && *(palavra+1) == '='){
 		infoAtomo.atomo = MEI;
 		palavra+=2;
 	}
@@ -327,11 +331,11 @@ TInfoAtomo obter_atomo(){
 		infoAtomo.atomo = ME;
 		palavra++;
 	}
-	else if((*palavra) == '/' && (*palavra+1) == '='){
+	else if((*palavra) == '/' && *(palavra+1) == '='){
 		infoAtomo.atomo = DI;
 		palavra+=2;
 	}
-	else if((*palavra) == '>' && (*palavra+1) == '='){
+	else if((*palavra) == '>' && *(palavra+1) == '='){
 		infoAtomo.atomo = MAI;
 		palavra+=2;
 	}
@@ -378,6 +382,13 @@ TInfoAtomo obter_atomo(){
 */
 	else if(isdigit(*palavra)){
 		reconhece_num(&infoAtomo);
+	}
+	
+/*
+*	Reconhece caracteres constantes
+*/
+	else if(*palavra == 39){
+		reconhece_char(&infoAtomo);
 	}
 	return infoAtomo;
 }
@@ -515,6 +526,20 @@ void reconhece_id(TInfoAtomo *infoAtomo){
 	poco:
 		infoAtomo->atomo = ERRO;
 	
+}
+
+
+void reconhece_char(TInfoAtomo *infoAtomo){
+	palavra++;
+	infoAtomo->atributo_ID[0] = *palavra;
+	infoAtomo->atributo_ID[1] = '\0';
+	palavra++;
+   	if(*palavra != 39){
+   		infoAtomo->atomo = ERRO;
+   		return;
+	}
+	palavra++;
+	infoAtomo->atomo = CARACTERE;
 }
 
 void reconhece_num(TInfoAtomo *infoAtomo){
