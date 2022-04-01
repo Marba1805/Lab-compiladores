@@ -120,6 +120,9 @@ int main(void){
 		else if(InfoAtomo.atomo == IDENTIFICADOR){
 			printf("linha\t%d:identificador - atributo:%s\n", InfoAtomo.linha, InfoAtomo.atributo_ID);
 		}
+		else if(InfoAtomo.atomo == SET){
+			printf("linha\t%d:set\n", InfoAtomo.linha);
+		}
 		else if(InfoAtomo.atomo == BEGIN){
 			printf("linha\t%d:begin\n", InfoAtomo.linha);
 		}
@@ -132,6 +135,33 @@ int main(void){
 		else if(InfoAtomo.atomo == ABRE_PAR){
 			printf("linha\t%d:abre parenteses\n", InfoAtomo.linha);
 		}
+		else if(InfoAtomo.atomo == OR){
+			printf("linha\t%d:or\n", InfoAtomo.linha);
+		}
+		else if(InfoAtomo.atomo == NOT){
+			printf("linha\t%d:not\n", InfoAtomo.linha);
+		}
+		else if(InfoAtomo.atomo == AND){
+			printf("linha\t%d:and\n", InfoAtomo.linha);
+		}
+		else if(InfoAtomo.atomo == TRUE){
+			printf("linha\t%d:true\n", InfoAtomo.linha);
+		}
+		else if(InfoAtomo.atomo == FALSE){
+			printf("linha\t%d:false\n", InfoAtomo.linha);
+		}
+		else if(InfoAtomo.atomo == BOOLEAN){
+			printf("linha\t%d:boolean\n", InfoAtomo.linha);
+		}
+		else if(InfoAtomo.atomo == IF){
+			printf("linha\t%d:if\n", InfoAtomo.linha);
+		}
+		else if(InfoAtomo.atomo == ELSE){
+			printf("linha\t%d:else\n", InfoAtomo.linha);
+		}
+		else if(InfoAtomo.atomo == CHAR){
+			printf("linha\t%d:char\n", InfoAtomo.linha);
+		}
 		else if(InfoAtomo.atomo == FECHA_PAR){
 			printf("linha\t%d:fecha parenteses\n", InfoAtomo.linha);
 		}
@@ -139,13 +169,22 @@ int main(void){
 			printf("linha\t%d:menor\n", InfoAtomo.linha);
 		}
 		else if(InfoAtomo.atomo == MEI){
-			printf("linha\t%d:menor iguali\n", InfoAtomo.linha);
+			printf("linha\t%d:menor igual\n", InfoAtomo.linha);
 		}
 		else if(InfoAtomo.atomo == MA){
 			printf("linha\t%d:maior\n", InfoAtomo.linha);
 		}
 		else if(InfoAtomo.atomo == MAI){
 			printf("linha\t%d:maior igual\n", InfoAtomo.linha);
+		}
+		else if(InfoAtomo.atomo == IG){
+			printf("linha\t%d:igual\n", InfoAtomo.linha);
+		}
+		else if(InfoAtomo.atomo == DI){
+			printf("linha\t%d:desigual\n", InfoAtomo.linha);
+		}
+		else if(InfoAtomo.atomo == MOD){
+			printf("linha\t%d:mod\n", InfoAtomo.linha);
 		}
 		else if(InfoAtomo.atomo == READ){
 			printf("linha\t%d:read\n", InfoAtomo.linha);
@@ -177,11 +216,23 @@ int main(void){
 		else if(InfoAtomo.atomo == DIVISAO){
 			printf("linha\t%d:divisao\n", linha);
 		}
+		else if(InfoAtomo.atomo == ADICAO){
+			printf("linha\t%d:adicao\n", InfoAtomo.linha);
+		}
+		else if(InfoAtomo.atomo == SUBTRACAO){
+			printf("linha\t%d:subtracao\n", InfoAtomo.linha);
+		}
+		else if(InfoAtomo.atomo == MULTIPLICACAO){
+			printf("linha\t%d:multiplicacao\n", InfoAtomo.linha);
+		}
 		else if(InfoAtomo.atomo == DO){
 			printf("linha\t%d:do\n", linha);
 		}
 		else if(InfoAtomo.atomo == WHILE){
 			printf("linha\t%d:while\n", linha);
+		}
+		else if(InfoAtomo.atomo == WRITE){
+			printf("linha\t%d:write\n", InfoAtomo.linha);
 		}
 		else if(InfoAtomo.atomo == END){
 			printf("linha\t%d:end\n", linha);
@@ -266,6 +317,34 @@ TInfoAtomo obter_atomo(){
 	}
 
 /*
+*	Reconhecimento de operadores relacionais
+*/
+	else if((*palavra) == '<' && (*palavra+1) == '='){
+		infoAtomo.atomo = MEI;
+		palavra+=2;
+	}
+	else if((*palavra) == '<'){
+		infoAtomo.atomo = ME;
+		palavra++;
+	}
+	else if((*palavra) == '/' && (*palavra+1) == '='){
+		infoAtomo.atomo = DI;
+		palavra+=2;
+	}
+	else if((*palavra) == '>' && (*palavra+1) == '='){
+		infoAtomo.atomo = MAI;
+		palavra+=2;
+	}
+	else if((*palavra) == '>'){
+		infoAtomo.atomo = MA;
+		palavra++;
+	}
+	else if((*palavra) == '='){
+		infoAtomo.atomo = IG;
+		palavra++;
+	}
+
+/*
 *	Reconhecimento de operadores aritmeticos
 */
 	else if((*palavra) == '-'){
@@ -285,33 +364,7 @@ TInfoAtomo obter_atomo(){
 		palavra++;
 	}
 
-/*
-*	Reconhecimento de operadores relacionais
-*/
-	else if((*palavra) == '<'){
-		infoAtomo.atomo = ME;
-		palavra++;
-	}
-	else if((*palavra) == '<' && (*palavra+1) == '='){
-		infoAtomo.atomo = MEI;
-		palavra+=2;
-	}
-	else if((*palavra) == '='){
-		infoAtomo.atomo = IG;
-		palavra++;
-	}
-	else if((*palavra) == '/' && (*palavra+1) == '='){
-		infoAtomo.atomo = DI;
-		palavra+=2;
-	}
-	else if((*palavra) == '>'){
-		infoAtomo.atomo = MA;
-		palavra++;
-	}
-	else if((*palavra) == '>' && (*palavra+1) == '='){
-		infoAtomo.atomo = MAI;
-		palavra+=2;
-	}
+
 	
 /*
 *	Reconhecimento de comentário
