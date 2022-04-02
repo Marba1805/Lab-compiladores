@@ -295,7 +295,17 @@ TInfoAtomo obter_atomo(){
 	if(isalpha(*palavra)){
 		reconhece_id(&infoAtomo);
 	}
-	
+
+/*
+*	Reconhecimento de comentario de uma linha
+*/
+	else if((*palavra) == '/' && *(palavra+1) == '/'){
+		infoAtomo.atomo = COMENTARIO;
+		while(*palavra != '\n'){
+			palavra++;
+		}
+	}
+
 /*
 *	Reconhecimento de atomos simples
 */
