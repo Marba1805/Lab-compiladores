@@ -2,7 +2,7 @@
 *
 *	Projeto Analisador Lexico
 *
-*	TIA: 31826131	NOME: Abram Grossman
+*	TIA: 31826131	NOME: Abram Grossmann
 *	TIA: 31836895	NOME: Victor Melly
 *
 */
